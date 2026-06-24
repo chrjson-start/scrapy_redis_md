@@ -1,4 +1,11 @@
 # scrapy-redis 请求流程详解
+在scrapy-redis重写的start_requests()方法中，会调用next_requests()方法，初始化设置后从Redis队列中取出数据，
+并调用make_request_from_data()方法，redis中保存的是字节数据，需要转为json字符串。
+，将数据转换成Scrapy Request对象，
+    return FormRequest(
+                url, dont_filter=True, method=method, formdata=parameter, meta=metadata
+            )#post请求是表单数据，不重写是不过滤的，重写make_request_from_data()方法要使用return返回Request对象
+最后用 yield 返回。
 
 ## 整体流程图
 
